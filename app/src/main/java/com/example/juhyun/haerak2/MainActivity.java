@@ -4,6 +4,8 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -44,6 +46,8 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //displaySelectedScreen(R.id.content_main);
+
 
     }
 
@@ -72,8 +76,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if(id == R.id.action_search){
-            Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-            this.startActivity(intent);
+            Fragment fragment = new SearchActivity();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_main, fragment).commit();
 
             return true;
         }
@@ -86,28 +91,55 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
+    private void displaySelectedScreen(int id){
+        Fragment fragment = null;
+            switch(id){
+                case R.id.nav_home:
+                    Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                    this.startActivity(intent);
+                    break;
+                case R.id.nav_mylist_layout:
+                    fragment = new MylistLayout();
+                    break;
+                case R.id.nav_grouplist_layout:
+                    fragment = new GrouplistLayout();
+                    break;
+            }
+
+        if(fragment != null){
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_main, fragment);
+            ft.commit();
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+    }
+
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        FragmentManager manager = getFragmentManager();
+//        FragmentManager manager = getFragmentManager();
+//
+//        if (id == R.id.nav_mylist_layout) {
+//            manager.beginTransaction().replace(R.id.content_main, new MylistLayout()).commit();
+//        } else if (id == R.id.nav_grouplist_layout) {
+//            manager.beginTransaction().replace(R.id.content_main, new GrouplistLayout()).commit();
+//        } else if (id == R.id.nav_manage) {
+//
+//        } else if (id == R.id.nav_share) {
+//
+//        } else if (id == R.id.nav_send) {
+//
+//        }
+        displaySelectedScreen(id);
 
-        if (id == R.id.nav_mylist_layout) {
-            manager.beginTransaction().replace(R.id.content_main, new MylistLayout()).commit();
-        } else if (id == R.id.nav_grouplist_layout) {
-            manager.beginTransaction().replace(R.id.content_main, new GrouplistLayout()).commit();
-        } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 }
