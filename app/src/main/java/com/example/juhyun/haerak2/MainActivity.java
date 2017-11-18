@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,9 +17,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private User user;
+    private TextView userid;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,19 @@ public class MainActivity extends AppCompatActivity
 
         //displaySelectedScreen(R.id.content_main);
 
+        user = (User) getIntent().getSerializableExtra("user");
+
+        navigationView = (NavigationView)findViewById(R.id.nav_view);
+        View navigation_header = navigationView.getHeaderView(0);
+        userid = (TextView)navigation_header.findViewById(R.id.profile_userId);
+
+        if(user == null){
+            //둘러보기일 경우,
+            userid.setText("로그인 후 이용해주세요.");
+        }else{
+            userid.setText(user.getNickName());
+        }
+
 
     }
 
@@ -76,9 +95,12 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if(id == R.id.action_search){
-            Fragment fragment = new SearchActivity();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_main, fragment).commit();
+//            Fragment fragment Ac= new SearchActivity();
+//            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//            ft.replace(R.id.content_main, fragment).commit();
+
+            Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+            this.startActivity(intent);
 
             return true;
         }

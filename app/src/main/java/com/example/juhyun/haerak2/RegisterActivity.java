@@ -2,6 +2,7 @@ package com.example.juhyun.haerak2;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,15 +29,22 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            Iterator<DataSnapshot> child = dataSnapshot.getChildren().iterator();
 
-            while (child.hasNext()){
-                if(userId.getText().toString().equals(child.next().getChildren())){
-                    Toast.makeText(getApplicationContext(), "존재하는 아이디 입니다.", Toast.LENGTH_LONG).show();
+            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                String key = snapshot.getKey();
+                User user = snapshot.getValue(User.class);
+
+                if(userId.getText().toString().equals(user.getUserId())){
+                    Toast.makeText(getApplicationContext(), "이미 존재하는 아이디 입니다.", Toast.LENGTH_LONG).show();
+                    mDatabase.removeEventListener(this);
+                    return;
+                }else if(nickName.getText().toString().equals(user.getNickName())){
+                    Toast.makeText(getApplicationContext(), "이미 존재하는 닉네임 입니다.", Toast.LENGTH_LONG).show();
                     mDatabase.removeEventListener(this);
                     return;
                 }
             }
+
             makeNewUser();
         }
 
@@ -51,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference("User");
 
         userId = (EditText) findViewById(R.id.idText);
         nickName = (EditText) findViewById(R.id.nicknameText);
@@ -65,12 +73,14 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-//                if(!password.equals(password2)){
-//                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show();
-//                }else{
+                if(userId.getText().toString().equals("") || nickName.getText().toString().equals("") || password.getText().toString().equals("") ){
+                    Toast.makeText(getApplicationContext(), "각 항목을 빠짐없이 기입해주세요.", Toast.LENGTH_LONG).show();
+                    return;
+                }else if(!(password.getText().toString()).equals(password2.getText().toString())){
+                    Toast.makeText(getApplicationContext(), "비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show();
+                }else{
                     mDatabase.addListenerForSingleValueEvent(checkRegister);
-               // }
+                }
 
             }
         });
@@ -86,12 +96,12 @@ public class RegisterActivity extends AppCompatActivity {
             gender = "M";
         }
 
-        String key = mDatabase.child("User").push().getKey();
+        String key = mDatabase.push().getKey();
 
-        mDatabase.child("User").child(key).child("id").setValue(userId.getText().toString());
-        mDatabase.child("User").child(key).child("nick").setValue(nickName.getText().toString());
-        mDatabase.child("User").child(key).child("passwd").setValue(password.getText().toString());
-        mDatabase.child("User").child(key).child("gender").setValue(gender);
+        mDatabase.child(key).child("userId").setValue(userId.getText().toString());
+        mDatabase.child(key).child("nickName").setValue(nickName.getText().toString());
+        mDatabase.child(key).child("passWord").setValue(password.getText().toString());
+        mDatabase.child(key).child("gender").setValue(gender);
 
         Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
 

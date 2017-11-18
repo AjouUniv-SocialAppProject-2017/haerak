@@ -23,7 +23,8 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".AddBucketActivity" />
         <activity android:name=".CalendarActivity" />
-        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".SearchActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

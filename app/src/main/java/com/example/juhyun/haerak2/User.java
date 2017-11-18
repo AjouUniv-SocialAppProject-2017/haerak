@@ -1,5 +1,6 @@
 package com.example.juhyun.haerak2;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +8,7 @@ import java.util.Map;
  * Created by SeoYeon Choi on 2017-11-17.
  */
 
-public class User {
+public class User implements Serializable{
 
     private String userId;
     private String nickName;
