@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@+id/toolbar"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="#ffffff">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="카테고리"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="10dp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="Do"
+            android:background="#66ccff"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:layout_marginRight="10dp"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="Eat"
+            android:background="#ff6600"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:layout_marginRight="10dp"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="watch"
+            android:background="#ffcc00"
+            android:textColor="#ffffff"
+            android:textStyle="bold"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="Have"
+            android:background="#ac39ac"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:layout_marginRight="10dp"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="Go"
+            android:background="#00cc44"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:layout_marginRight="10dp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1">
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
