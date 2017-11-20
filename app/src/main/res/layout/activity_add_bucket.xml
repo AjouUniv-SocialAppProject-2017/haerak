@@ -17,14 +17,13 @@
         android:orientation="vertical">
 
         <ImageButton
-            android:id="@+id/addbucketButton"
+            android:id="@+id/categoryButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
             app:srcCompat="@drawable/icon_do"
-            android:background="#ffffff"
-            />
+            android:background="#ffffff"/>
 
     <EditText
         android:id="@+id/titleText"
@@ -92,23 +91,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_gravity="center">
 
             <Button
+                android:id="@+id/addCancelButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginRight="20dp"
                 android:background="@color/colorPrimary"
                 android:textColor="#ffffff"
-                android:text="취소"/>
+                android:text="취소"
+                android:textStyle="bold"/>
 
             <Button
+                android:id="@+id/addbucketButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:background="#ff580f"
                 android:textColor="#ffffff"
-                android:text="저장"/>
+                android:text="저장"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 

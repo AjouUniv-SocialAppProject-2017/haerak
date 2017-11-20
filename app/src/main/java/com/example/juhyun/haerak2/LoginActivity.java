@@ -26,26 +26,31 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
+            boolean flag = false;
 
             for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                 User user = snapshot.getValue(User.class);
 
                 if(user.getUserId().equals(userId.getText().toString())){
                     if(user.getPassWord().equals(password.getText().toString())){
+                        flag = true;
                         login(user);
                         return;
                     }else{
+                        flag = true;
                         Toast.makeText(getApplicationContext(), "패스워드가 일치하지 않습니다.", Toast.LENGTH_LONG).show();
                         databaseReference.removeEventListener(this);
                         return;
                     }
 
-                }else{
-                    Toast.makeText(getApplicationContext(), "아이디가 존재하지 않습니다.", Toast.LENGTH_LONG).show();
-                    return;
                 }
             }
+
+            if(!flag){
+                    Toast.makeText(getApplicationContext(), "아이디가 존재하지 않습니다.", Toast.LENGTH_LONG).show();
+                }
         }
+
 
         @Override
         public void onCancelled(DatabaseError databaseError) {
