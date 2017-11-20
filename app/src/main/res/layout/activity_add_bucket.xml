@@ -4,20 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.juhyun.haerak2.AddBucketActivity">
+    tools:context="com.example.juhyun.haerak2.AddBucketActivity"
+    android:background="#ffffff">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:isScrollContainer="true">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="100dp"
+        <ImageButton
+            android:id="@+id/addbucketButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="Button" />
+            android:layout_marginTop="30dp"
+            app:srcCompat="@drawable/icon_do"
+            android:background="#ffffff"
+            />
 
     <EditText
         android:id="@+id/titleText"
@@ -37,17 +44,20 @@
 
             <TextView
                 android:id="@+id/dateText"
-                android:layout_width="200dp"
+                android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textSize="19sp"
-                android:hint="날짜"/>
+                android:hint="날짜" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/gocalButton"
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="달력" />
+                android:text="달력"
+                app:srcCompat="@drawable/ic_calendar"
+                android:background="#ffffff"
+                />
 
 
         </LinearLayout>
@@ -78,6 +88,33 @@
         android:hint="내용"
         android:inputType="textMultiLine" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#ffffff"
+                android:text="취소"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#ff580f"
+                android:textColor="#ffffff"
+                android:text="저장"/>
+
+        </LinearLayout>
+
+
     </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>
