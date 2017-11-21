@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,9 +17,44 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.GridView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private User user;
+    private TextView userid;
+    private NavigationView navigationView;
+    private GridView gridView;
+    private BucketListAdapter adapter;
+    private DatabaseReference databaseReference;
+
+    private ValueEventListener getbucketList = new ValueEventListener(){
+
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                Bucket bucket = snapshot.getValue(Bucket.class);
+
+                adapter.addBucket(bucket.getTitle(), bucket.getWriter(), bucket.getLimitNumber());
+            }
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +63,14 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        user = (User) getIntent().getSerializableExtra("user");
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
            public void onClick(View view) {
                Intent intent = new Intent(getApplicationContext(),AddBucketActivity.class);
+               intent.putExtra("user", user);
                startActivity(intent);
             }
         });
@@ -47,6 +86,26 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //displaySelectedScreen(R.id.content_main);
+
+        navigationView = (NavigationView)findViewById(R.id.nav_view);
+        View navigation_header = navigationView.getHeaderView(0);
+        userid = (TextView)navigation_header.findViewById(R.id.profile_userId);
+
+        if(user == null){
+            //둘러보기일 경우,
+            userid.setText("로그인 후 이용해주세요.");
+        }else{
+            userid.setText(user.getNickName());
+        }
+
+        adapter = new BucketListAdapter();
+
+        gridView = (GridView) findViewById(R.id.all_bucketList);
+        gridView.setAdapter(adapter);
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Buckets");
+        databaseReference.addListenerForSingleValueEvent(getbucketList);
 
 
     }
@@ -76,9 +135,12 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if(id == R.id.action_search){
-            Fragment fragment = new SearchActivity();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_main, fragment).commit();
+//            Fragment fragment Ac= new SearchActivity();
+//            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//            ft.replace(R.id.content_main, fragment).commit();
+
+            Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+            this.startActivity(intent);
 
             return true;
         }

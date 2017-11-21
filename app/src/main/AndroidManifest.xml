@@ -25,7 +25,8 @@
         <activity android:name=".AddBucketActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".CalendarActivity" />
-        <!--<activity android:name=".SearchActivity"></activity>-->
+        <activity android:name=".SearchActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name = ".SelectCategoryPop"
             android:theme = "@style/AppTheme.SelectCategoryPop"></activity>
     </application>
