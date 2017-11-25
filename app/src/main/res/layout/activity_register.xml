@@ -77,30 +77,46 @@
             android:layout_gravity="center"
             android:inputType="textPassword" />
 
-        <RadioGroup
+
+        <LinearLayout
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:id="@+id/genderGraoup"
             android:layout_gravity="center"
-            android:orientation="horizontal"
             android:layout_marginTop="10dp">
 
-            <RadioButton
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="여성"
-                android:id="@+id/genderWoman"
-                android:layout_weight="1"
-                android:checked="true"/>
-            <RadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="남성"
-                android:id="@+id/genderMan"
-                android:layout_weight="1"
-                android:checked="false"/>
+                android:text="성별"
+                android:layout_marginTop="3dp"
+                android:textSize="18dp"/>
 
-        </RadioGroup>
+            <RadioGroup
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/genderGraoup"
+                android:orientation="horizontal"
+                android:layout_marginLeft="15dp">
+
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="여성"
+                    android:id="@+id/genderWoman"
+                    android:layout_weight="1"
+                    android:checked="true"/>
+                <RadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="남성"
+                    android:id="@+id/genderMan"
+                    android:layout_weight="1"
+                    android:checked="false"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
+
 
         <Button
             android:id="@+id/registerButton"
