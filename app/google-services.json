@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "866654822049",
+    "firebase_url": "https://haerak-683cd.firebaseio.com",
+    "project_id": "haerak-683cd",
+    "storage_bucket": "haerak-683cd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:866654822049:android:a58625d8ae4e3f66",
+        "android_client_info": {
+          "package_name": "com.example.juhyun.haerak2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "866654822049-86llmecdn4qi9b84og98ctllfopvfshj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.juhyun.haerak2",
+            "certificate_hash": "43e34a4f086a172a75398db794ab82b07241a5a4"
+          }
+        },
+        {
+          "client_id": "866654822049-chfpmfembov2sgr119be8lvcoom49411.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbww88_yCVa8_JZJzRONIfZrk4HnYTUrw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "866654822049-chfpmfembov2sgr119be8lvcoom49411.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
