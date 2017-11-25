@@ -1,14 +1,18 @@
 package com.example.juhyun.haerak2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Created by SeoYeon Choi on 2017-11-19.
@@ -17,9 +21,11 @@ import java.util.ArrayList;
 public class BucketListAdapter extends BaseAdapter{
 
     private ArrayList<Bucket> bucketList;
+    private ArrayList<String> keyList;
 
     public BucketListAdapter(){
         bucketList = new ArrayList<>();
+        keyList = new ArrayList<>();
     }
     @Override
     public int getCount() {
@@ -53,6 +59,7 @@ public class BucketListAdapter extends BaseAdapter{
 
         title.setText(bucket.getTitle());
         writer.setText(bucket.getWriter());
+        view.setTag(keyList.get(i));
 
             if(bucket!=null){
                 if(bucket.getLimitNumber() == 1){
@@ -68,11 +75,21 @@ public class BucketListAdapter extends BaseAdapter{
                 }
             }
 
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String key = (String) view.getTag();
+
+                Intent intent = new Intent(context, BucketDetailActivity.class);
+                intent.putExtra("key", key);
+                context.startActivity(intent);
+            }
+        });
 
         return view;
     }
 
-    public void addBucket(String title, String writer, int num){
+    public void addBucket(String key, String title, String writer, int num){
         Bucket bucket = new Bucket();
 
         bucket.setTitle(title);
@@ -80,5 +97,7 @@ public class BucketListAdapter extends BaseAdapter{
         bucket.setLimitNumber(num);
 
         bucketList.add(bucket);
+        keyList.add(key);
     }
+
 }

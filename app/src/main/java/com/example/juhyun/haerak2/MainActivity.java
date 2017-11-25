@@ -16,8 +16,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity
     private GridView gridView;
     private BucketListAdapter adapter;
     private DatabaseReference databaseReference;
+    private LinearLayout item;
 
     private ValueEventListener getbucketList = new ValueEventListener(){
 
@@ -43,9 +46,10 @@ public class MainActivity extends AppCompatActivity
         public void onDataChange(DataSnapshot dataSnapshot) {
 
             for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                String key = snapshot.getKey();
                 Bucket bucket = snapshot.getValue(Bucket.class);
 
-                adapter.addBucket(bucket.getTitle(), bucket.getWriter(), bucket.getLimitNumber());
+                adapter.addBucket(key, bucket.getTitle(), bucket.getWriter(), bucket.getLimitNumber());
             }
             adapter.notifyDataSetChanged();
         }
@@ -69,9 +73,13 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
            public void onClick(View view) {
-               Intent intent = new Intent(getApplicationContext(),AddBucketActivity.class);
-               intent.putExtra("user", user);
-               startActivity(intent);
+                if(user == null){
+                    Toast.makeText(getApplicationContext(), "로그인 후 이용가능합니다!", Toast.LENGTH_LONG).show();
+                }else{
+                    Intent intent = new Intent(getApplicationContext(),AddBucketActivity.class);
+                    intent.putExtra("user", user);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -103,10 +111,8 @@ public class MainActivity extends AppCompatActivity
         gridView = (GridView) findViewById(R.id.all_bucketList);
         gridView.setAdapter(adapter);
 
-
         databaseReference = FirebaseDatabase.getInstance().getReference("Buckets");
         databaseReference.addListenerForSingleValueEvent(getbucketList);
-
 
     }
 
@@ -204,4 +210,5 @@ public class MainActivity extends AppCompatActivity
 
         return true;
     }
+
 }
