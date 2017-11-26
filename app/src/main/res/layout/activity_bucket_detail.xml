@@ -10,13 +10,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="5">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="2"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp">
@@ -96,7 +97,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/colorPrimary">
 
         <TextView
@@ -139,20 +141,21 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="0dp"
+        android:layout_weight="3">
 
             <ListView
+                android:id="@+id/bucket_comments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
 
     </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/colorPrimary">
 
         <EditText
@@ -162,8 +165,8 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="5dp"
             android:layout_weight="5"
-            android:inputType="textPersonName"
-            android:hint="댓글 남기기.." />
+            android:hint="댓글 남기기.."
+            android:inputType="textMultiLine" />
 
         <Button
             android:id="@+id/addcommentButton"

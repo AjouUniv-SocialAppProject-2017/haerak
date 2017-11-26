@@ -20,6 +20,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 public class AddBucketActivity extends AppCompatActivity {
 
     private ImageButton gocalButton, category;
@@ -110,7 +112,10 @@ public class AddBucketActivity extends AppCompatActivity {
         bucket.setLimitNumber(Integer.parseInt(limitNumber.getText().toString()));
         bucket.setCategory(bucket_category);
 
-        databaseReference.child("Buckets").push().setValue(bucket);
+        String bucket_key = databaseReference.child("Buckets").push().getKey();
+        databaseReference.child("Buckets").child(bucket_key).setValue(bucket);
+
+        databaseReference.child("Bucket-members").child(bucket_key).child("0").setValue(user.getNickName());
     }
 
     @Override

@@ -22,6 +22,7 @@ public class BucketListAdapter extends BaseAdapter{
 
     private ArrayList<Bucket> bucketList;
     private ArrayList<String> keyList;
+    private String user;
 
     public BucketListAdapter(){
         bucketList = new ArrayList<>();
@@ -82,6 +83,7 @@ public class BucketListAdapter extends BaseAdapter{
 
                 Intent intent = new Intent(context, BucketDetailActivity.class);
                 intent.putExtra("key", key);
+                intent.putExtra("user", user);
                 context.startActivity(intent);
             }
         });
@@ -89,15 +91,10 @@ public class BucketListAdapter extends BaseAdapter{
         return view;
     }
 
-    public void addBucket(String key, String title, String writer, int num){
-        Bucket bucket = new Bucket();
-
-        bucket.setTitle(title);
-        bucket.setWriter(writer);
-        bucket.setLimitNumber(num);
-
+    public void addBucket(String key, Bucket bucket, String user){
         bucketList.add(bucket);
         keyList.add(key);
+        this.user = user;
     }
 
 }

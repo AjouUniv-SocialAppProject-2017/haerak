@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity
                 String key = snapshot.getKey();
                 Bucket bucket = snapshot.getValue(Bucket.class);
 
-                adapter.addBucket(key, bucket.getTitle(), bucket.getWriter(), bucket.getLimitNumber());
+                adapter.addBucket(key, bucket, user.getNickName());
             }
             adapter.notifyDataSetChanged();
         }

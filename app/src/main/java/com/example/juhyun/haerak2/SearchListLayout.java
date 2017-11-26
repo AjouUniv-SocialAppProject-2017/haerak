@@ -38,7 +38,7 @@ public class SearchListLayout extends Fragment{
                 Bucket bucket = snapshot.getValue(Bucket.class);
 
                 if(bucket.getTitle().contains(getArguments().getString("search"))){
-                    adapter.addBucket(key, bucket.getTitle(), bucket.getWriter(), bucket.getLimitNumber());
+                    adapter.addBucket(key, bucket, "user");
                 }
 
             }
