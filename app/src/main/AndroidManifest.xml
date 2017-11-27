@@ -33,7 +33,9 @@
         <activity
             android:name=".SelectCategoryPop"
             android:theme="@style/AppTheme.SelectCategoryPop" />
-        <activity android:name=".BucketDetailActivity"></activity>
+        <activity android:name=".BucketDetailActivity" />
+        <activity android:name=".CategorySearchActivity" />
+        <activity android:name=".RealBucketActivity"></activity>
     </application>
 
 </manifest>
