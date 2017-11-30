@@ -49,7 +49,11 @@ public class MainActivity extends AppCompatActivity
                 String key = snapshot.getKey();
                 Bucket bucket = snapshot.getValue(Bucket.class);
 
-                adapter.addBucket(key, bucket, user.getNickName());
+                if(user == null){
+                    adapter.addBucket(key, bucket, "");
+                }else{
+                    adapter.addBucket(key, bucket, user.getNickName());
+                }
             }
             adapter.notifyDataSetChanged();
         }
@@ -165,6 +169,7 @@ public class MainActivity extends AppCompatActivity
             switch(id){
                 case R.id.nav_home:
                     Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                    intent.putExtra("user", user);
                     this.startActivity(intent);
                     break;
                 case R.id.nav_mylist_layout:
