@@ -150,6 +150,11 @@ public class MainActivity extends AppCompatActivity
 //            ft.replace(R.id.content_main, fragment).commit();
 
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+            if(user == null){
+                intent.putExtra("user", "");
+            }else{
+                intent.putExtra("user", user.getNickName());
+            }
             this.startActivity(intent);
 
             return true;
@@ -182,7 +187,7 @@ public class MainActivity extends AppCompatActivity
 
         if(fragment != null){
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_main, fragment);
+            ft.replace(R.id.main_view, fragment);
             ft.commit();
         }
 

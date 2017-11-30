@@ -59,7 +59,7 @@ public class BucketListAdapter extends BaseAdapter{
         Bucket bucket = bucketList.get(i);
 
         title.setText(bucket.getTitle());
-        writer.setText(bucket.getWriter());
+        writer.setText(bucket.getCategory());
         view.setTag(keyList.get(i));
 
             if(bucket!=null){
@@ -75,6 +75,20 @@ public class BucketListAdapter extends BaseAdapter{
                     view.setBackgroundResource(R.drawable.back5);
                 }
             }
+
+        if(bucket!=null){
+                if(bucket.getCategory().equals("do")){
+                    writer.setBackgroundColor(0xff66ccff);
+                }else if(bucket.getCategory().equals("eat")){
+                    writer.setBackgroundColor(0xffff6600);
+                }else if(bucket.getCategory().equals("watch")){
+                    writer.setBackgroundColor(0xffffcc00);
+                }else if(bucket.getCategory().equals("have")){
+                    writer.setBackgroundColor(0xffac39ac);
+                }else{
+                    writer.setBackgroundColor(0xff00cc44);
+                }
+        }
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

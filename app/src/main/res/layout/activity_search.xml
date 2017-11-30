@@ -31,7 +31,14 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <include layout="@layout/search_category"></include>
+    <FrameLayout
+        android:id="@+id/search_category"
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/search_category"></include>
+    </FrameLayout>
+
 
     <!--<TextView-->
         <!--android:id="@+id/textView4"-->
