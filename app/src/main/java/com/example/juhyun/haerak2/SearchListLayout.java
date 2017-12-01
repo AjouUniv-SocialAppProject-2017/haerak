@@ -34,10 +34,11 @@ public class SearchListLayout extends Fragment{
             ArrayList<Bucket> bucketList = new ArrayList<>();
 
             for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                String key = snapshot.getKey();
                 Bucket bucket = snapshot.getValue(Bucket.class);
 
                 if(bucket.getTitle().contains(getArguments().getString("search"))){
-                    adapter.addBucket(bucket.getTitle(), bucket.getWriter(), bucket.getLimitNumber());
+                    adapter.addBucket(key, bucket, "user");
                 }
 
             }

@@ -30,9 +30,10 @@ public class CalendarActivity extends AppCompatActivity {
                 String date = year + "년" + (month+1) + "월" + dayOfMonth + "일";
                 Log.d(TAG, "onSelectedDayChange: date" + date);
 
-                Intent intent = new Intent(CalendarActivity.this, AddBucketActivity.class);
+                Intent intent = new Intent();
                 intent.putExtra("date",  date);
-                startActivity(intent);
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
 
