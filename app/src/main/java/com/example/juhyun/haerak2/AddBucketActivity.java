@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +33,7 @@ public class AddBucketActivity extends AppCompatActivity {
     private User user;
     private int REQUEST_CATEGORY, REQUEST_DATE;
     private String bucket_category;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +118,7 @@ public class AddBucketActivity extends AppCompatActivity {
         databaseReference.child("Buckets").child(bucket_key).setValue(bucket);
 
         databaseReference.child("Bucket-members").child(bucket_key).child("0").setValue(user.getNickName());
+
     }
 
     @Override

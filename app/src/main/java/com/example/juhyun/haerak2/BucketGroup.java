@@ -7,12 +7,24 @@ import java.util.ArrayList;
  */
 
 public class BucketGroup {
+
+    String bucketId;
     String title;
     String content;
+    String category;
     int progressRate;
+    int limitNumber;
     ArrayList<String> members;
 
     BucketGroup(){}
+
+    public String getBucketId() {
+        return bucketId;
+    }
+
+    public void setBucketId(String bucketId) {
+        this.bucketId = bucketId;
+    }
 
     public String getTitle() {
         return title;
@@ -30,12 +42,28 @@ public class BucketGroup {
         this.content = content;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public int getProgressRate() {
         return progressRate;
     }
 
     public void setProgressRate(int progressRate) {
         this.progressRate = progressRate;
+    }
+
+    public int getLimitNumber() {
+        return limitNumber;
+    }
+
+    public void setLimitNumber(int limitNumber) {
+        this.limitNumber = limitNumber;
     }
 
     public ArrayList<String> getMembers() {

@@ -26,7 +26,7 @@ public class BucketDetailActivity extends AppCompatActivity {
 
     private DatabaseReference dataBase , dataBase2, dataBase3, dataBase4;
     private TextView nickName, title, date, content, currNum, limitNum;
-    private String key, user;
+    private String key, user, category;
     private Button join, addComment, makeGroup;
     private long memberNum;
     private EditText comments;
@@ -77,6 +77,8 @@ public class BucketDetailActivity extends AppCompatActivity {
 
         }
     };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +113,7 @@ public class BucketDetailActivity extends AppCompatActivity {
                 date.setText(bucket.getDate());
                 content.setText(bucket.getContent());
                 limitNum.setText(bucket.getLimitNumber() + "");
+                category = bucket.getCategory();
 
                 if(bucket.getWriter().equals(user)){
                     makeGroup.setVisibility(View.VISIBLE);
@@ -161,12 +164,17 @@ public class BucketDetailActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //그룹 생성 Yes
                         BucketGroup group = new BucketGroup();
+                        group.setBucketId(key);
                         group.setTitle(title.getText().toString());
                         group.setContent(content.getText().toString());
+                        group.setCategory(category);
                         group.setProgressRate(0);
+                        group.setLimitNumber(Integer.parseInt(limitNum.getText().toString()));
                         group.setMembers(members);
 
-                        dataBase4.child("BucketGroups").push().setValue(group);
+                        String group_key = dataBase4.child("BucketGroups").push().getKey();
+                        dataBase4.child("BucketGroups").child(group_key).setValue(group);
+                        
                         Toast.makeText(getApplicationContext(), "그룹 생성!", Toast.LENGTH_LONG).show();
                     }
                 }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
