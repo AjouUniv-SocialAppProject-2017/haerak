@@ -35,6 +35,8 @@
             android:theme="@style/AppTheme.SelectCategoryPop" />
         <activity android:name=".BucketDetailActivity"
             android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".CategorySearchActivity" />
+        <activity android:name=".RealBucketActivity"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.example.juhyun.haerak2;
 
 
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.SearchView;
 
@@ -57,6 +59,54 @@ public class SearchActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        Button gobutton = (Button) findViewById(R.id.category_go_button);
+        Button dobutton = (Button) findViewById(R.id.category_do_button);
+        Button watchbutton = (Button) findViewById(R.id.category_watch_button);
+        Button eatbutton = (Button) findViewById(R.id.category_eat_button);
+        Button havebutton = (Button) findViewById(R.id.category_have_button);
+
+        gobutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SearchActivity.this, CategorySearchActivity.class);
+                SearchActivity.this.startActivity(intent);
+            }
+        });
+
+        dobutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SearchActivity.this, CategorySearchActivity.class);
+                SearchActivity.this.startActivity(intent);
+            }
+        });
+
+        watchbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SearchActivity.this, CategorySearchActivity.class);
+                SearchActivity.this.startActivity(intent);
+            }
+        });
+
+        eatbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SearchActivity.this, CategorySearchActivity.class);
+                SearchActivity.this.startActivity(intent);
+            }
+        });
+
+        havebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SearchActivity.this, CategorySearchActivity.class);
+                SearchActivity.this.startActivity(intent);
+            }
+        });
+
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
