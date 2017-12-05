@@ -2,8 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="#ffffff"
-    android:layout_marginTop="?attr/actionBarSize">
+    android:layout_marginTop="?attr/actionBarSize"
+    android:orientation="vertical">
 
+    <!--<ListView-->
+        <!--android:id="@+id/groupList"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"></ListView>-->
 
     <TabHost
         android:id="@+id/tabhost1"
@@ -25,6 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+
                 <LinearLayout
                     android:id="@+id/tab_fixed"
                     android:layout_width="match_parent"
@@ -32,9 +38,9 @@
                     android:orientation="vertical">
 
                     <ListView
-                        android:id="@+id/fixedBucketList"
+                        android:id="@+id/groupList"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent" />
 
                 </LinearLayout>
 
@@ -43,6 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
 
                     <ListView
                         android:id="@+id/unfixedBucketList"

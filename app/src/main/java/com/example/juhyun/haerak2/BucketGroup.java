@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class BucketGroup {
 
     String bucketId;
+    String leader;
     String title;
     String content;
     String category;
@@ -24,6 +25,14 @@ public class BucketGroup {
 
     public void setBucketId(String bucketId) {
         this.bucketId = bucketId;
+    }
+
+    public String getLeader() {
+        return leader;
+    }
+
+    public void setLeader(String leader) {
+        this.leader = leader;
     }
 
     public String getTitle() {

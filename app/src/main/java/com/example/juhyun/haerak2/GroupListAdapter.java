@@ -2,6 +2,7 @@ package com.example.juhyun.haerak2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,7 @@ public class GroupListAdapter extends BaseAdapter {
         limit.setText(bucket.getLimitNumber()+"");
         view.setTag(keyList.get(i));
 
+
         if(bucket!=null){
             if(bucket.getLimitNumber() == 1){
                 view.setBackgroundResource(R.drawable.back1);
@@ -107,8 +109,7 @@ public class GroupListAdapter extends BaseAdapter {
         return view;
     }
 
-    public void addBucket(String key, BucketGroup group, String user, long currNum)
-    {
+    public void addGroup(String key, BucketGroup group, String user, long currNum) {
         keyList.add(key);
         groupList.add(group);
         this.user = user;

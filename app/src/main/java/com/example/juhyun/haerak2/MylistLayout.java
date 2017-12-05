@@ -3,6 +3,7 @@ package com.example.juhyun.haerak2;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 /**
  * Created by juhyun on 2017. 11. 10..
  */
@@ -24,30 +27,39 @@ public class MylistLayout extends Fragment {
     private String user;
     private DatabaseReference database, dataBase2;
     private ListView listView;
-    private long currNum;
+    private HashMap<String, Long> memberCount;
+
+    private ValueEventListener getMemberCount = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            for(DataSnapshot data: dataSnapshot.getChildren()){
+                String key = data.getKey();
+                long count = data.getChildrenCount();
+
+                memberCount.put(key, count);
+            }
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
 
     private ValueEventListener getBucketList = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            for(final DataSnapshot data : dataSnapshot.getChildren()){
-                final String key = data.getKey();
+
+            for(DataSnapshot data : dataSnapshot.getChildren()){
+                String key = data.getKey();
                 Bucket bucket = data.getValue(Bucket.class);
 
                 if(bucket.getWriter().equals(user)){
-                    dataBase2.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            currNum = dataSnapshot.child(key).getChildrenCount();
-                        }
+                    long count = memberCount.get(key).longValue();
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-                    adapter.addBucket(key, bucket, user, currNum);
+                    adapter.addBucket(key, bucket, user, count);
                 }
+
             }
 
             adapter.notifyDataSetChanged();
@@ -78,8 +90,12 @@ public class MylistLayout extends Fragment {
         adapter = new MyBucketListAdapter();
         listView.setAdapter(adapter);
 
+        memberCount = new HashMap<>();
+
         database = FirebaseDatabase.getInstance().getReference("Buckets");
         dataBase2 = FirebaseDatabase.getInstance().getReference("Bucket-members");
+
+        dataBase2.addListenerForSingleValueEvent(getMemberCount);
 
         user = getArguments().getString("user");
 

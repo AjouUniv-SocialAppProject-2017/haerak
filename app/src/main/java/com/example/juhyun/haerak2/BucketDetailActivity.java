@@ -165,6 +165,7 @@ public class BucketDetailActivity extends AppCompatActivity {
                         //그룹 생성 Yes
                         BucketGroup group = new BucketGroup();
                         group.setBucketId(key);
+                        group.setLeader(user);
                         group.setTitle(title.getText().toString());
                         group.setContent(content.getText().toString());
                         group.setCategory(category);
