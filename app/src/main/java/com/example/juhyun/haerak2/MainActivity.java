@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -113,6 +114,20 @@ public class MainActivity extends AppCompatActivity
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Buckets");
         databaseReference.addListenerForSingleValueEvent(getbucketList);
+
+        TabHost th = (TabHost) findViewById(R.id.mainhost);
+        th.setup();
+
+        TabHost.TabSpec ingsp = th.newTabSpec("bucket_ing");
+        ingsp.setIndicator(getString(R.string.bucket_ing));
+        ingsp.setContent(R.id.bucket_ing);
+        th.addTab(ingsp);
+
+        TabHost.TabSpec completesp = th.newTabSpec("bucket_complete");
+        completesp.setIndicator(getString(R.string.bucket_complete));
+        completesp.setContent(R.id.bucket_complete);
+        th.addTab(completesp);
+
 
     }
 

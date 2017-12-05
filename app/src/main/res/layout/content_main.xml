@@ -11,17 +11,70 @@
     tools:showIn="@layout/app_bar_main"
     android:background="#ffffff">
 
-    <GridView
-        android:id="@+id/all_bucketList"
+    <TabHost
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="2"
-        android:horizontalSpacing="2dp"
-        android:verticalSpacing="2dp"
-        android:stretchMode="columnWidth">
+        android:id="@+id/mainhost">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/bucket_ing"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <GridView
+                        android:id="@+id/all_bucketList"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:numColumns="2"
+                        android:horizontalSpacing="10dp"
+                        android:verticalSpacing="10dp"
+                        android:stretchMode="columnWidth">
+
+                    </GridView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bucket_complete"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <GridView
+                        android:id="@+id/bucket_complete_List"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:numColumns="2"
+                        android:horizontalSpacing="2dp"
+                        android:verticalSpacing="2dp"
+                        android:stretchMode="columnWidth">
+
+                    </GridView>
+
+                </LinearLayout>
+
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
 
 
-    </GridView>
 
 
 
