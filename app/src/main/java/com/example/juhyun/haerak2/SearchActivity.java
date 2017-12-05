@@ -30,7 +30,6 @@ public class SearchActivity extends AppCompatActivity {
 
     private SearchView searchView;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +47,9 @@ public class SearchActivity extends AppCompatActivity {
                 Fragment fragment = new SearchListLayout();
                 Bundle arg = new Bundle();
                 arg.putString("search", query);
+                arg.putString("user", getIntent().getStringExtra("user"));
                 fragment.setArguments(arg);
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.search_category, fragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.search_category, fragment).commit();
 
                 return true;
             }
