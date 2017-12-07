@@ -12,6 +12,12 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
@@ -36,17 +42,14 @@
         <activity android:name=".CategorySearchActivity" />
         <activity android:name=".RealBucketActivity" />
         <activity android:name=".AddGroupPostActivity" />
-        <activity android:name=".GroupPostDetailActivity" />
+        <activity
+            android:name=".GroupPostDetailActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".IntroActivity"
             android:label="@string/title_activity_intro"
             android:theme="@style/AppTheme.NoActionBar">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
     </application>

@@ -1,8 +1,11 @@
 package com.example.juhyun.haerak2;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TabHost;
@@ -15,15 +18,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RealBucketActivity extends AppCompatActivity {
 
-    private String key, user, bucketKey;
-    private DatabaseReference database;
+    private String key, user;
+    private DatabaseReference database, database2;
     private GroupMemberAdapter adapter;
+    private GroupPostListAdapter postAdapter;
     private TextView title, content;
-    private ListView memberList;
+    private ListView memberList, postList;
     private ImageView categoryImage;
 
     @Override
@@ -44,24 +47,40 @@ public class RealBucketActivity extends AppCompatActivity {
         communitysp.setContent(R.id.community_tab);
         th.addTab(communitysp);
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AddGroupPostActivity.class);
+                intent.putExtra("user", user);
+                intent.putExtra("groupKey", key);
+                startActivity(intent);
+            }
+        });
+
         key = getIntent().getStringExtra("key");
         user = getIntent().getStringExtra("user");
         title = (TextView) findViewById(R.id.infotab_buckettitle);
         content = (TextView)findViewById(R.id.infotab_bucketcontent);
         categoryImage = (ImageView)findViewById(R.id.infotab_categoryimageview);
         memberList = (ListView) findViewById(R.id.infotab_memberlistview);
+        postList = (ListView)findViewById(R.id.join_bucketList);
 
         adapter = new GroupMemberAdapter();
         memberList.setAdapter(adapter);
 
+        postAdapter = new GroupPostListAdapter();
+        postList.setAdapter(postAdapter);
+
         database = FirebaseDatabase.getInstance().getReference("BucketGroups").child(key);
+
         database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 BucketGroup group = dataSnapshot.getValue(BucketGroup.class);
                 ArrayList<String> members = group.getMembers();
 
-                bucketKey = group.getBucketId();
                 title.setText(group.getTitle());
                 content.setText(group.getContent());
 
@@ -88,6 +107,37 @@ public class RealBucketActivity extends AppCompatActivity {
                 }
 
 
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        database2 = FirebaseDatabase.getInstance().getReference("GroupPosts").child(key);
+        database2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot data: dataSnapshot.getChildren()){
+                    String postKey = data.getKey();
+                    DataSnapshot dd = data.child("likeMembers");
+
+                    GroupPost post = new GroupPost();
+                    post.setTitle(data.child("title").getValue(String.class));
+                    post.setContent(data.child("content").getValue(String.class));
+                    post.setWriter(data.child("writer").getValue(String.class));
+
+                    ArrayList<String> members = new ArrayList<>();
+                    for(DataSnapshot name : dd.getChildren()){
+                        members.add(name.getValue(String.class));
+                    }
+
+                    post.setLikeMembers(members);
+
+                    postAdapter.addPost(key, postKey, post, user);
+                }
+                postAdapter.notifyDataSetChanged();
             }
 
             @Override

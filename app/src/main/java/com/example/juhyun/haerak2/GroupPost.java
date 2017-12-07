@@ -1,12 +1,13 @@
 package com.example.juhyun.haerak2;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by SeoYeon Choi on 2017-12-06.
  */
 
-public class GroupPost {
+public class GroupPost implements Serializable{
 
     private String title;
     private String content;

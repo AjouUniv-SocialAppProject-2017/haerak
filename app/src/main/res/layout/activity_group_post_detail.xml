@@ -5,15 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.juhyun.haerak2.GroupPostDetailActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#ffffff">
 
     <TextView
+        android:id="@+id/groupPostTitle"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:hint="그룹포스트제목"
         android:textSize="25dp"
-        android:layout_margin="20dp"
+        android:padding="8dp"
         android:textStyle="bold"/>
 
     <LinearLayout
@@ -24,15 +26,16 @@
         android:layout_marginRight="20dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             app:srcCompat="@drawable/ic_user" />
 
         <TextView
+            android:id="@+id/groupPostWriter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="아이디"
-            android:textSize="17dp"
+            android:textSize="20sp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"/>
 
@@ -47,6 +50,7 @@
         android:background="@color/colorPrimaryDark">
 
         <TextView
+            android:id="@+id/groupPostContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="그룹포스트내용"
@@ -55,7 +59,51 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center|start"
+        android:paddingLeft="10dp">
+
+        <ImageView
+            android:id="@+id/btnLikePost"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_favorite_border_black_24dp"
+            android:layout_marginRight="5dp"
+            android:tag="notLike"/>
+
+        <TextView
+            android:id="@+id/postLikeNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:textSize="18sp"
+            android:layout_marginRight="10dp"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_textsms_black_24dp"
+            android:layout_marginRight="5dp"/>
+        <TextView
+            android:id="@+id/postCommentNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:textSize="18sp"/>
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#e2e2e2"/>
+
     <ListView
+        android:id="@+id/groupPostComment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"/>

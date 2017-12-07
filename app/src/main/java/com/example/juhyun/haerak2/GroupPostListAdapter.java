@@ -19,7 +19,7 @@ public class GroupPostListAdapter extends BaseAdapter {
 
     private ArrayList<GroupPost> postList;
     private ArrayList<String> keyList;
-    private String user;
+    private String user, groupKey;
 
     public GroupPostListAdapter(){
         postList = new ArrayList<>();
@@ -54,10 +54,15 @@ public class GroupPostListAdapter extends BaseAdapter {
         TextView title = (TextView) view.findViewById(R.id.post_title_text);
         TextView likes = (TextView) view.findViewById(R.id.post_like_num);
 
-        GroupPost post = postList.get(i);
+        final GroupPost post = postList.get(i);
 
         title.setText(post.getTitle());
-        Log.d("dddddddddd", post.getTitle());
+        if(post.getLikeMembers() == null){
+            likes.setText("0");
+        }else{
+            likes.setText(post.getLikeMembers().size()+"");
+        }
+
         view.setTag(keyList.get(i));
 
         view.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +71,9 @@ public class GroupPostListAdapter extends BaseAdapter {
                 String key = (String) view.getTag();
 
                 Intent intent = new Intent(context, GroupPostDetailActivity.class);
-                intent.putExtra("key", key);
+                intent.putExtra("groupKey", groupKey);
+                intent.putExtra("postKey", key);
+                intent.putExtra("post", post);
                 intent.putExtra("user", user);
                 context.startActivity(intent);
             }
@@ -75,9 +82,10 @@ public class GroupPostListAdapter extends BaseAdapter {
         return view;
     }
 
-    public void addPost(String key, GroupPost post, String user){
+    public void addPost(String groupKey, String key, GroupPost post, String user){
         keyList.add(key);
         postList.add(post);
         this.user = user;
+        this.groupKey = groupKey;
     }
 }
