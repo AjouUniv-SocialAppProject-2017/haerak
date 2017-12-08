@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.juhyun.haerak2.IntroActivity$PlaceholderFragment"
     android:orientation="vertical"
-    android:gravity="center"
-    android:background="@drawable/intro_background">
+    android:gravity="center">
 
 
     <!--<ImageView-->
@@ -18,6 +17,6 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/intro_frag1"/>
+        android:src="@drawable/introfrag1"/>
 
 </LinearLayout>
