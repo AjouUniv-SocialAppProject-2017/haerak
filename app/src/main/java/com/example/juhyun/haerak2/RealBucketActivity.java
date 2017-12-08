@@ -86,6 +86,7 @@ public class RealBucketActivity extends AppCompatActivity {
 
                 for (String mem : members){
                     adapter.addMember(mem);
+                    adapter.notifyDataSetChanged();
                 }
 
                 switch (group.getCategory()){

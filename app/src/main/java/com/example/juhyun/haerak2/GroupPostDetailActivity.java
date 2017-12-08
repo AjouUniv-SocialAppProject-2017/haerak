@@ -144,6 +144,8 @@ public class GroupPostDetailActivity extends AppCompatActivity {
 
                 database.push().setValue(comment);
                 database.addListenerForSingleValueEvent(getPostComments);
+
+                commentText.setText("");
             }
         });
 

@@ -26,9 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
-
-
     private SearchView searchView;
+    private String user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +39,7 @@ public class SearchActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        user = getIntent().getStringExtra("user");
         searchView = (SearchView)findViewById(R.id.searchText);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -47,7 +47,7 @@ public class SearchActivity extends AppCompatActivity {
                 Fragment fragment = new SearchListLayout();
                 Bundle arg = new Bundle();
                 arg.putString("search", query);
-                arg.putString("user", getIntent().getStringExtra("user"));
+                arg.putString("user", user);
                 fragment.setArguments(arg);
                 getSupportFragmentManager().beginTransaction().replace(R.id.search_category, fragment).commit();
 
@@ -70,6 +70,8 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SearchActivity.this, CategorySearchActivity.class);
+                intent.putExtra("user", user);
+                intent.putExtra("tabIndex", 4);
                 SearchActivity.this.startActivity(intent);
             }
         });
@@ -78,6 +80,8 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SearchActivity.this, CategorySearchActivity.class);
+                intent.putExtra("user", user);
+                intent.putExtra("tabIndex", 0);
                 SearchActivity.this.startActivity(intent);
             }
         });
@@ -86,6 +90,8 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SearchActivity.this, CategorySearchActivity.class);
+                intent.putExtra("user", user);
+                intent.putExtra("tabIndex", 2);
                 SearchActivity.this.startActivity(intent);
             }
         });
@@ -94,6 +100,8 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SearchActivity.this, CategorySearchActivity.class);
+                intent.putExtra("user", user);
+                intent.putExtra("tabIndex", 1);
                 SearchActivity.this.startActivity(intent);
             }
         });
@@ -102,6 +110,8 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SearchActivity.this, CategorySearchActivity.class);
+                intent.putExtra("user", user);
+                intent.putExtra("tabIndex", 3);
                 SearchActivity.this.startActivity(intent);
             }
         });

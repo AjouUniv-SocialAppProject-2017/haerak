@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -27,9 +28,11 @@ public class GrouplistLayout extends Fragment {
     private TabHost tabhost;
     private ListView fixedList, unfixedList;
     private GroupListAdapter adapter;
-    private DatabaseReference database, database2;
+    private MyBucketListAdapter adapter2;
+    private DatabaseReference database, database2 ,database3;
     private String user;
     private HashMap<String, Long> memberCount;
+    private ArrayList<String> unfixedBuckets;
 
     private ValueEventListener getMemberCount = new ValueEventListener() {
         @Override
@@ -39,6 +42,13 @@ public class GrouplistLayout extends Fragment {
                 long count = data.getChildrenCount();
 
                 memberCount.put(key, count);
+
+                for(DataSnapshot dd: data.getChildren()){
+                    if(dd.getValue(String.class).equals(user)){
+                        unfixedBuckets.add(key);
+                    }
+                }
+
             }
         }
 
@@ -74,6 +84,24 @@ public class GrouplistLayout extends Fragment {
         }
     };
 
+    private ValueEventListener getBuckets = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            Bucket bucket = dataSnapshot.getValue(Bucket.class);
+            String key = dataSnapshot.getKey();
+            long currNum = memberCount.get(key).longValue();
+
+            adapter2.addBucket(key, bucket, user, currNum);
+
+            adapter2.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
+
     View v;
 
     @Override
@@ -93,28 +121,42 @@ public class GrouplistLayout extends Fragment {
 
         TabHost.TabSpec tab1 = tabhost.newTabSpec("Tab Spec Fixed");
         tab1.setContent(R.id.tab_fixed);
-        tab1.setIndicator("확정");
+        tab1.setIndicator("그룹");
         tabhost.addTab(tab1);
 
         TabHost.TabSpec tab2 = tabhost.newTabSpec("Tab Spec Unfixed");
         tab2.setContent(R.id.tab_unfixed);
-        tab2.setIndicator("미확정");
+        tab2.setIndicator("참여");
         tabhost.addTab(tab2);
 
         fixedList = (ListView) v.findViewById(R.id.groupList);
         adapter = new GroupListAdapter();
         fixedList.setAdapter(adapter);
 
+        unfixedList =(ListView) v.findViewById(R.id.unfixedBucketList);
+        adapter2 = new MyBucketListAdapter();
+        unfixedList.setAdapter(adapter2);
+
+        unfixedBuckets = new ArrayList<>();
         memberCount = new HashMap<>();
 
         database = FirebaseDatabase.getInstance().getReference("BucketGroups");
         database2 = FirebaseDatabase.getInstance().getReference("Bucket-members");
+        database3 = FirebaseDatabase.getInstance().getReference("Buckets");
 
         database2.addListenerForSingleValueEvent(getMemberCount);
 
         user = getArguments().getString("user");
 
         database.addListenerForSingleValueEvent(getBucketGroups);
+
+        if(unfixedBuckets != null){
+            Log.d("ddddddddddd", unfixedBuckets.size()+"");
+            for(int i=0; i<unfixedBuckets.size(); i++){
+                database3.child(unfixedBuckets.get(i)).addListenerForSingleValueEvent(getBuckets);
+            }
+        }
+
 
         return v;
     }

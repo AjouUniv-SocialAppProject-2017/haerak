@@ -34,6 +34,7 @@ public class BucketDetailActivity extends AppCompatActivity {
     private BucketCommentAdapter adapter;
     private ArrayList<String> members;
 
+
     private ValueEventListener getBucketCurrMembers = new ValueEventListener(){
 
         @Override
@@ -77,7 +78,6 @@ public class BucketDetailActivity extends AppCompatActivity {
 
         }
     };
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,19 +198,26 @@ public class BucketDetailActivity extends AppCompatActivity {
         addComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BucketComment comment = new BucketComment();
-                comment.setWriter(user);
-                comment.setContent(comments.getText().toString());
+                if(user.equals("")){
+                    Toast.makeText(getApplicationContext(), "로그인 후 이용가능합니다!", Toast.LENGTH_LONG).show();
+                    comments.setText("");
+                }else{
+                    BucketComment comment = new BucketComment();
+                    comment.setWriter(user);
+                    comment.setContent(comments.getText().toString());
 
-                long time = System.currentTimeMillis();
-                Date date = new Date(time);
-                SimpleDateFormat format = new SimpleDateFormat("yyyy/mm/dd hh:mm:ss");
-                String dateFormat = format.format(date);
+                    long time = System.currentTimeMillis();
+                    Date date = new Date(time);
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy/mm/dd hh:mm:ss");
+                    String dateFormat = format.format(date);
 
-                comment.setDate(dateFormat);
+                    comment.setDate(dateFormat);
 
-                dataBase3.push().setValue(comment);
-                dataBase3.addListenerForSingleValueEvent(getBucketComments);
+                    dataBase3.push().setValue(comment);
+                    dataBase3.addListenerForSingleValueEvent(getBucketComments);
+
+                    comments.setText("");
+                }
             }
         });
 
