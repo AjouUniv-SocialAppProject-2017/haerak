@@ -1,12 +1,14 @@
 package com.example.juhyun.haerak2;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,6 +35,7 @@ public class BucketDetailActivity extends AppCompatActivity {
     private ListView commentList;
     private BucketCommentAdapter adapter;
     private ArrayList<String> members;
+    private ImageButton location;
 
 
     private ValueEventListener getBucketCurrMembers = new ValueEventListener(){
@@ -96,11 +99,22 @@ public class BucketDetailActivity extends AppCompatActivity {
         join = (Button)findViewById(R.id.addbucketgroupButton);
         addComment = (Button)findViewById(R.id.addcommentButton);
         makeGroup = (Button) findViewById(R.id.makeGroupButton);
+        location = (ImageButton) findViewById(R.id.bucket_location);
 
         commentList = (ListView)findViewById(R.id.bucket_comments);
         members = new ArrayList<>();
 
         user = getIntent().getStringExtra("user");
+
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BucketDetailActivity.this, MapActivity.class);
+                intent.putExtra("latitude", getIntent().getDoubleExtra("latitude", 0.0));
+                intent.putExtra("longitude", getIntent().getDoubleExtra("longitude", 0.0));
+                startActivity(intent);
+            }
+        });
 
         //버킷 상세정보 로드
         dataBase = FirebaseDatabase.getInstance().getReference("Buckets").child(key);

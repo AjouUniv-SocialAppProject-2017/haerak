@@ -56,7 +56,7 @@ public class BucketListAdapter extends BaseAdapter{
         TextView title = (TextView) view.findViewById(R.id.bucketTitle);
         TextView writer = (TextView) view.findViewById(R.id.bucketWriter);
 
-        Bucket bucket = bucketList.get(i);
+        final Bucket bucket = bucketList.get(i);
 
         title.setText(bucket.getTitle());
         writer.setText(bucket.getCategory());
@@ -98,6 +98,8 @@ public class BucketListAdapter extends BaseAdapter{
                 Intent intent = new Intent(context, BucketDetailActivity.class);
                 intent.putExtra("key", key);
                 intent.putExtra("user", user);
+                intent.putExtra("latitude", bucket.getLatitude());
+                intent.putExtra("longitude", bucket.getLongitude());
                 context.startActivity(intent);
             }
         });

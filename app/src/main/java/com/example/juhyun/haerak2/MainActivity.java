@@ -3,6 +3,7 @@ package com.example.juhyun.haerak2;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -24,6 +25,8 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,13 +36,14 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    //private FirebaseUser user;
     private User user;
-    private TextView userid;
+    private TextView userid, userEmail;
     private NavigationView navigationView;
     private GridView gridView;
     private BucketListAdapter adapter;
-    private DatabaseReference databaseReference;
-    private LinearLayout item;
+    private DatabaseReference databaseReference, database;
+    private FirebaseAuth auth;
 
     private ValueEventListener getbucketList = new ValueEventListener(){
 
@@ -74,6 +78,9 @@ public class MainActivity extends AppCompatActivity
 
         user = (User) getIntent().getSerializableExtra("user");
 
+//        auth = FirebaseAuth.getInstance();
+//        user = auth.getCurrentUser();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,18 +110,24 @@ public class MainActivity extends AppCompatActivity
         navigationView = (NavigationView)findViewById(R.id.nav_view);
         View navigation_header = navigationView.getHeaderView(0);
         userid = (TextView)navigation_header.findViewById(R.id.profile_userId);
+        userEmail = (TextView)navigation_header.findViewById(R.id.profile_userEmail);
 
         if(user == null){
             //둘러보기일 경우,
             userid.setText("로그인 후 이용해주세요.");
+            //userEmail.setText("");
         }else{
             userid.setText(user.getNickName());
+            //userEmail.setText(user.getEmail());
         }
 
         adapter = new BucketListAdapter();
 
         gridView = (GridView) findViewById(R.id.all_bucketList);
         gridView.setAdapter(adapter);
+
+        //database = FirebaseDatabase.getInstance().getReference("User").child(user.getUid());
+
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Buckets");
         databaseReference.addListenerForSingleValueEvent(getbucketList);

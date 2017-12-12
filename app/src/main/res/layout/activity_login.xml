@@ -12,7 +12,8 @@
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="225dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:background="#ffffff">
 
@@ -28,7 +29,8 @@
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <EditText
@@ -40,8 +42,9 @@
             android:background="#FFFFFF"
             android:drawableLeft="@drawable/ic_person_black_24dp"
             android:drawableStart="@drawable/ic_person_black_24dp"
-            android:hint="아이디"
-            android:padding="10dp">
+            android:hint="이메일"
+            android:padding="10dp"
+            android:inputType="textEmailAddress">
 
         </EditText>
 

@@ -61,13 +61,44 @@
 
         </LinearLayout>
 
+        <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_marginTop="10dp">-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/placeText"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:textSize="19sp"-->
+                <!--android:hint="장소"-->
+                <!--android:layout_marginRight="5dp"/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/placeNameText"-->
+                <!--android:layout_width="180dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:textSize="19sp" />-->
+
+            <!--<ImageButton-->
+                <!--android:id="@+id/placeButton"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:src="@drawable/ic_pin_drop_black_24dp"-->
+                <!--android:background="#ffffff"-->
+                <!--/>-->
+            <!---->
+        <!--</LinearLayout>-->
         <EditText
+            android:id="@+id/placeText"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:inputType="textPersonName"
-            android:hint="지도들어갈부분, 장소"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:hint="장소 및 위치"/>
 
         <EditText
             android:id="@+id/limitnumberText"

@@ -2,6 +2,10 @@ package com.example.juhyun.haerak2;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.os.AsyncTask;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +17,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,7 +31,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AddBucketActivity extends AppCompatActivity {
 
@@ -29,10 +41,12 @@ public class AddBucketActivity extends AppCompatActivity {
     private TextView date_view;
     private Button cancel, save;
     private DatabaseReference databaseReference;
-    private EditText title, limitNumber, content;
+    private EditText title, limitNumber, content, place;
     private User user;
     private int REQUEST_CATEGORY, REQUEST_DATE;
     private String bucket_category;
+    private double latitude, longitude;
+    private boolean isLocationTrue = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +57,7 @@ public class AddBucketActivity extends AppCompatActivity {
 
         date_view = (TextView) findViewById(R.id.dateText);
         gocalButton = (ImageButton) findViewById(R.id.gocalButton);
+        place = (EditText) findViewById(R.id.placeText);
 
         title = (EditText)findViewById(R.id.titleText);
         limitNumber = (EditText)findViewById(R.id.limitnumberText);
@@ -75,16 +90,22 @@ public class AddBucketActivity extends AppCompatActivity {
             }
         });
 
+
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                changePlaceLanLon();
+
                 if(title.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "버킷의 제목을 입력하세요", Toast.LENGTH_LONG).show();
                 }else if(content.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "버킷의 내용을 입력하세요", Toast.LENGTH_LONG).show();
+                }else if(!isLocationTrue){
+                    Toast.makeText(getApplicationContext(), "주소를 정확히 입력해주세요", Toast.LENGTH_LONG).show();
                 }else{
+
                     addBucket();
 
                     Intent intent = new Intent(AddBucketActivity.this, MainActivity.class);
@@ -112,11 +133,41 @@ public class AddBucketActivity extends AppCompatActivity {
         bucket.setContent(content.getText().toString());
         bucket.setLimitNumber(Integer.parseInt(limitNumber.getText().toString()));
         bucket.setCategory(bucket_category);
+        bucket.setLatitude(latitude);
+        bucket.setLongitude(longitude);
 
         String bucket_key = databaseReference.child("Buckets").push().getKey();
         databaseReference.child("Buckets").child(bucket_key).setValue(bucket);
 
         databaseReference.child("Bucket-members").child(bucket_key).child("0").setValue(user.getNickName());
+
+    }
+
+    //주소를 경도, 위도로 변환
+    public void changePlaceLanLon(){
+        Geocoder geocoder = new Geocoder(this);
+        List<Address> list = null;
+
+        String str = place.getText().toString();
+        try {
+            list = geocoder.getFromLocationName(
+                    str, // 지역 이름
+                    10); // 읽을 개수
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("test","입출력 오류 - 서버에서 주소변환시 에러발생");
+        }
+
+        if (list != null) {
+            if (list.size() == 0) {
+                isLocationTrue = false;
+                //Toast.makeText(getApplicationContext(), "해당되는 주소가 없습니다.", Toast.LENGTH_LONG).show();
+            } else {
+                isLocationTrue = true;
+                latitude = list.get(0).getLatitude();
+                longitude = list.get(0).getLongitude();
+            }
+        }
 
     }
 
@@ -168,7 +219,6 @@ public class AddBucketActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "날짜를 다시 선택해주세요.", Toast.LENGTH_LONG).show();
             }
         }
-
 
     }
 }
