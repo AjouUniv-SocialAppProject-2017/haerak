@@ -34,7 +34,6 @@ public class AddBucketActivity extends AppCompatActivity {
     private int REQUEST_CATEGORY, REQUEST_DATE;
     private String bucket_category;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

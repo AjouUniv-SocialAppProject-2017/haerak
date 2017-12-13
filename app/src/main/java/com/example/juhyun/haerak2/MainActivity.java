@@ -193,16 +193,26 @@ public class MainActivity extends AppCompatActivity
                     this.startActivity(intent);
                     break;
                 case R.id.nav_mylist_layout:
-                    fragment = new MylistLayout();
-                    Bundle arg = new Bundle();
-                    arg.putString("user", user.getNickName());
-                    fragment.setArguments(arg);
+                    if(user == null){
+                        Intent intent1 = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent1);
+                    }else{
+                        fragment = new MylistLayout();
+                        Bundle arg = new Bundle();
+                        arg.putString("user", user.getNickName());
+                        fragment.setArguments(arg);
+                    }
                     break;
                 case R.id.nav_grouplist_layout:
-                    fragment = new GrouplistLayout();
-                    Bundle arg2 = new Bundle();
-                    arg2.putString("user", user.getNickName());
-                    fragment.setArguments(arg2);
+                    if(user == null){
+                        Intent intent2 = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent2);
+                    }else{
+                        fragment = new GrouplistLayout();
+                        Bundle arg2 = new Bundle();
+                        arg2.putString("user", user.getNickName());
+                        fragment.setArguments(arg2);
+                    }
                     break;
             }
 

@@ -64,4 +64,5 @@ public class Bucket implements Serializable{
     public void setLimitNumber(int limitNumber) {
         this.limitNumber = limitNumber;
     }
+
 }

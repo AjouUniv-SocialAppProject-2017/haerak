@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.juhyun.haerak2.CategorySearchActivity">
+    tools:context="com.example.juhyun.haerak2.CategorySearchActivity"
+    android:background="#ffffff">
 
     <TabHost
         android:id="@+id/categorytabhost"
@@ -24,19 +25,23 @@
             <FrameLayout
                 android:id="@android:id/tabcontent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:id="@+id/do_tab"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
-                    <TextView
+                    <GridView
+                        android:id="@+id/do_bucketList"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="DO탭레이아웃"
-                        android:textSize="50dp"/>
+                        android:layout_height="match_parent"
+                        android:numColumns="2"
+                        android:horizontalSpacing="10dp"
+                        android:verticalSpacing="10dp"
+                        android:stretchMode="columnWidth"/>
 
                 </LinearLayout>
 
@@ -44,13 +49,17 @@
                     android:id="@+id/eat_tab"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
-                    <TextView
+                    <GridView
+                        android:id="@+id/eat_bucketList"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="EAT레이아웃"
-                        android:textSize="50dp"/>
+                        android:layout_height="match_parent"
+                        android:numColumns="2"
+                        android:horizontalSpacing="10dp"
+                        android:verticalSpacing="10dp"
+                        android:stretchMode="columnWidth"/>
 
                 </LinearLayout>
 
@@ -58,13 +67,17 @@
                     android:id="@+id/watch_tab"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
-                    <TextView
+                    <GridView
+                        android:id="@+id/watch_bucketList"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="WATCh레이아웃"
-                        android:textSize="50dp"/>
+                        android:layout_height="match_parent"
+                        android:numColumns="2"
+                        android:horizontalSpacing="10dp"
+                        android:verticalSpacing="10dp"
+                        android:stretchMode="columnWidth"/>
 
                 </LinearLayout>
 
@@ -72,13 +85,17 @@
                     android:id="@+id/have_tab"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
-                    <TextView
+                    <GridView
+                        android:id="@+id/have_bucketList"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="HAVE레이아웃"
-                        android:textSize="50dp"/>
+                        android:layout_height="match_parent"
+                        android:numColumns="2"
+                        android:horizontalSpacing="10dp"
+                        android:verticalSpacing="10dp"
+                        android:stretchMode="columnWidth"/>
 
                 </LinearLayout>
 
@@ -86,13 +103,17 @@
                     android:id="@+id/go_tab"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
-                    <TextView
+                    <GridView
+                        android:id="@+id/go_bucketList"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Go레이아웃"
-                        android:textSize="50dp"/>
+                        android:layout_height="match_parent"
+                        android:numColumns="2"
+                        android:horizontalSpacing="10dp"
+                        android:verticalSpacing="10dp"
+                        android:stretchMode="columnWidth"/>
 
                 </LinearLayout>
 

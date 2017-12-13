@@ -13,7 +13,7 @@
         android:layout_marginBottom="2dp">
     <ImageView
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:src="@drawable/ic_user"
         android:layout_marginRight="15dp"
@@ -22,7 +22,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="4"
         android:orientation="vertical">
         
         <TextView
@@ -30,14 +30,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="id"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textColor="#000000"/>
         <TextView
             android:id="@+id/comment_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="date"
-            android:textSize="15sp"
             android:layout_marginBottom="2dp"/>
 
         <TextView
@@ -45,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="content"
-            android:textSize="18sp"
+            android:textSize="17sp"
             android:inputType="textMultiLine"
             android:textColor="#000000"/>
         
