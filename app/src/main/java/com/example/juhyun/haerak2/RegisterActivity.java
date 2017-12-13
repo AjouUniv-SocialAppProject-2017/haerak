@@ -29,8 +29,6 @@ import java.util.Iterator;
 public class RegisterActivity extends AppCompatActivity{
 
     private DatabaseReference mDatabase;
-    private FirebaseAuth auth;
-    private FirebaseAuth.AuthStateListener authListener;
     private EditText userId, nickName, password, password2;
     private Button btnRegister;
     private RadioButton female, male;
@@ -51,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity{
                 }
             }
 
-            signUp();
+
         }
 
         @Override
@@ -76,8 +74,6 @@ public class RegisterActivity extends AppCompatActivity{
         female = (RadioButton) findViewById(R.id.genderWoman);
         male = (RadioButton)findViewById(R.id.genderMan);
 
-        auth = FirebaseAuth.getInstance();
-
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,41 +91,41 @@ public class RegisterActivity extends AppCompatActivity{
 
     }
 
-    private void signUp(){
-        auth.createUserWithEmailAndPassword(userId.getText().toString(), password.getText().toString())
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            String gender = "F";
-
-                            if(female.isChecked()){
-                                gender = "F";
-                            }else if(male.isChecked()){
-                                gender = "M";
-                            }
-                            FirebaseUser user = task.getResult().getUser();
-                            String key = user.getUid();
-
-                            User userModel = new User();
-                            userModel.setUserId(user.getEmail());
-                            userModel.setNickName(nickName.getText().toString());
-                            userModel.setPassWord(password.getText().toString());
-                            userModel.setGender(gender);
-
-                            mDatabase.child(key).setValue(userModel);
-
-                            Toast.makeText(getApplicationContext(), "가입 성공!", Toast.LENGTH_SHORT).show();
-
-                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                            startActivity(intent);
-
-                        }else{
-                            Toast.makeText(getApplicationContext(), "가입 실패", Toast.LENGTH_LONG).show();
-
-                        }
-                    }
-                });
-    }
+//    private void signUp(){
+//        auth.createUserWithEmailAndPassword(userId.getText().toString(), password.getText().toString())
+//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if(task.isSuccessful()){
+//                            String gender = "F";
+//
+//                            if(female.isChecked()){
+//                                gender = "F";
+//                            }else if(male.isChecked()){
+//                                gender = "M";
+//                            }
+//                            FirebaseUser user = task.getResult().getUser();
+//                            String key = user.getUid();
+//
+//                            User userModel = new User();
+//                            userModel.setUserId(user.getEmail());
+//                            userModel.setNickName(nickName.getText().toString());
+//                            userModel.setPassWord(password.getText().toString());
+//                            userModel.setGender(gender);
+//
+//                            mDatabase.child(key).setValue(userModel);
+//
+//                            Toast.makeText(getApplicationContext(), "가입 성공!", Toast.LENGTH_SHORT).show();
+//
+//                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+//                            startActivity(intent);
+//
+//                        }else{
+//                            Toast.makeText(getApplicationContext(), "가입 실패", Toast.LENGTH_LONG).show();
+//
+//                        }
+//                    }
+//                });
+//    }
 
 }
