@@ -100,6 +100,7 @@ public class BucketListAdapter extends BaseAdapter{
                 intent.putExtra("user", user);
                 intent.putExtra("latitude", bucket.getLatitude());
                 intent.putExtra("longitude", bucket.getLongitude());
+                intent.putExtra("location", bucket.getLocation());
                 context.startActivity(intent);
             }
         });

@@ -24,8 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 public class LoginActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
-    private FirebaseAuth auth;
-    private FirebaseAuth.AuthStateListener authListener;
     private EditText userId, password;
     private Button loginButton;
     private TextView registerButton, browseButton;
@@ -77,19 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         registerButton = (TextView) findViewById(R.id.registerButton);
         browseButton = (TextView) findViewById(R.id.browseButton);
 
-        auth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("User");
-
-//        authListener = new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                FirebaseUser user = firebaseAuth.getCurrentUser();
-//                if(user!=null){
-//                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                    startActivity(intent);
-//                }
-//            }
-//        };
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,32 +103,8 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        auth.addAuthStateListener(authListener);
-//    }
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        if (authListener != null) {
-//            auth.removeAuthStateListener(authListener);
-//        }
-//    }
 
     public void login(User user){
-//        auth.signInWithEmailAndPassword(userId.getText().toString(), password.getText().toString())
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if(task.isSuccessful()){
-//                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                            startActivity(intent);
-//                        }else{
-//                            Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//                });
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtra("user", user);
         startActivity(intent);

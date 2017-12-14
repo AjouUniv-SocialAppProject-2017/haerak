@@ -16,6 +16,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private double latitude;
     private double longitude;
+    private String address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         latitude = getIntent().getDoubleExtra("latitude", 0.0);
         longitude = getIntent().getDoubleExtra("longitude", 0.0);
+        address = getIntent().getStringExtra("location");
     }
 
 
@@ -37,6 +39,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(location);
+        markerOptions.title(address);
         googleMap.addMarker(markerOptions);
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));

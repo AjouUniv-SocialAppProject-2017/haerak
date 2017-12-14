@@ -110,6 +110,7 @@ public class BucketDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(BucketDetailActivity.this, MapActivity.class);
+                intent.putExtra("location", getIntent().getStringExtra("location"));
                 intent.putExtra("latitude", getIntent().getDoubleExtra("latitude", 0.0));
                 intent.putExtra("longitude", getIntent().getDoubleExtra("longitude", 0.0));
                 startActivity(intent);
@@ -183,7 +184,7 @@ public class BucketDetailActivity extends AppCompatActivity {
                         group.setTitle(title.getText().toString());
                         group.setContent(content.getText().toString());
                         group.setCategory(category);
-                        group.setProgressRate(0);
+                        group.setProgressRate(10);
                         group.setLimitNumber(Integer.parseInt(limitNum.getText().toString()));
                         group.setMembers(members);
 

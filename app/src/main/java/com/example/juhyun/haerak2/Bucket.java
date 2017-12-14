@@ -14,6 +14,7 @@ public class Bucket implements Serializable{
     private String date;
     private String content;
     private int limitNumber;
+    private String location;
     private double latitude;
     private double longitude;
 
@@ -65,6 +66,14 @@ public class Bucket implements Serializable{
 
     public void setLimitNumber(int limitNumber) {
         this.limitNumber = limitNumber;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public double getLatitude() {

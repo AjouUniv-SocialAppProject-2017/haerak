@@ -115,10 +115,10 @@ public class MainActivity extends AppCompatActivity
         if(user == null){
             //둘러보기일 경우,
             userid.setText("로그인 후 이용해주세요.");
-            //userEmail.setText("");
+            userEmail.setText("");
         }else{
             userid.setText(user.getNickName());
-            //userEmail.setText(user.getEmail());
+            userEmail.setText(user.getUserId());
         }
 
         adapter = new BucketListAdapter();

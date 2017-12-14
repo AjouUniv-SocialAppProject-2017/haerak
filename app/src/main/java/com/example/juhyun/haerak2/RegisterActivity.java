@@ -48,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity{
                     return;
                 }
             }
-
+            makeNewUser();
 
         }
 
@@ -91,41 +91,27 @@ public class RegisterActivity extends AppCompatActivity{
 
     }
 
-//    private void signUp(){
-//        auth.createUserWithEmailAndPassword(userId.getText().toString(), password.getText().toString())
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if(task.isSuccessful()){
-//                            String gender = "F";
-//
-//                            if(female.isChecked()){
-//                                gender = "F";
-//                            }else if(male.isChecked()){
-//                                gender = "M";
-//                            }
-//                            FirebaseUser user = task.getResult().getUser();
-//                            String key = user.getUid();
-//
-//                            User userModel = new User();
-//                            userModel.setUserId(user.getEmail());
-//                            userModel.setNickName(nickName.getText().toString());
-//                            userModel.setPassWord(password.getText().toString());
-//                            userModel.setGender(gender);
-//
-//                            mDatabase.child(key).setValue(userModel);
-//
-//                            Toast.makeText(getApplicationContext(), "가입 성공!", Toast.LENGTH_SHORT).show();
-//
-//                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-//                            startActivity(intent);
-//
-//                        }else{
-//                            Toast.makeText(getApplicationContext(), "가입 실패", Toast.LENGTH_LONG).show();
-//
-//                        }
-//                    }
-//                });
-//    }
+    public void makeNewUser()
+    {
+        String gender = "F";
+
+        if(female.isChecked()){
+            gender = "F";
+        }else if(male.isChecked()){
+            gender = "M";
+        }
+
+        User user = new User();
+        user.setUserId(userId.getText().toString());
+        user.setNickName(nickName.getText().toString());
+        user.setPassWord(password.getText().toString());
+        user.setGender(gender);
+
+        mDatabase.push().setValue(user);
+
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
+
 
 }
