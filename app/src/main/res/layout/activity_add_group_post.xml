@@ -5,51 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.juhyun.haerak2.AddGroupPostActivity"
-    android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="제목"
-            android:textSize="25dp"
-            android:layout_marginRight="15dp"/>
+    android:orientation="vertical"
+    android:background="#ffffff">
 
         <EditText
             android:id="@+id/post_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="제목을 입력하세요."
+            android:layout_margin="20dp"
             android:inputType="textPersonName" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp">
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="내용"
-            android:textSize="25dp"
-            android:layout_marginRight="15dp" />
 
         <EditText
             android:id="@+id/post_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:height="300dp"
-            android:inputType="textMultiLine" />
-
-    </LinearLayout>
+            android:lines="10"
+            android:gravity="top"
+            android:layout_margin="20dp"
+            android:hint="내용을 입력하세요."
+            android:background="@drawable/btn_bg_ex_black"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,13 +37,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="취소"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="20dp"
+            android:background="@color/colorPrimary"/>
 
         <Button
             android:id="@+id/btn_post_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="저장"/>
+            android:text="저장"
+            android:background="@color/colorAccent"/>
 
     </LinearLayout>
 
