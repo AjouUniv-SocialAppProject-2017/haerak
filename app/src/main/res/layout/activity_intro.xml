@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.juhyun.haerak2.IntroActivity">
+    tools:context="com.example.juhyun.haerak2.IntroActivity"
+    android:background="@drawable/intro_background">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/container"

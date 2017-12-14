@@ -1,5 +1,6 @@
 package com.example.juhyun.haerak2;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
 import android.widget.TextView;
 
 public class IntroActivity extends AppCompatActivity {
@@ -99,7 +101,7 @@ public class IntroActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment1_intro, container, false);
-//            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+////            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 //            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
@@ -124,6 +126,7 @@ public class IntroActivity extends AppCompatActivity {
                 case 0: return new IntroFrag1();
                 case 1: return new IntroFrag2();
                 case 2: return new IntroFrag3();
+                case 3: return new IntroFrag4();
                 default: return null;
             }
 
@@ -133,7 +136,7 @@ public class IntroActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
     }
 }
