@@ -227,6 +227,10 @@ public class MainActivity extends AppCompatActivity
                         fragment.setArguments(arg2);
                     }
                     break;
+                case R.id.nav_logout:
+                    Intent intent3 = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent3);
+                    Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_LONG).show();
             }
 
         if(fragment != null){
