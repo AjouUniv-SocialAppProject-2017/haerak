@@ -17,6 +17,8 @@ public class Bucket implements Serializable{
     private String location;
     private double latitude;
     private double longitude;
+    private String photoUrl;
+    private String isGroup;
 
     public Bucket(){}
 
@@ -90,5 +92,21 @@ public class Bucket implements Serializable{
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public String getIsGroup() {
+        return isGroup;
+    }
+
+    public void setIsGroup(String isGroup) {
+        this.isGroup = isGroup;
     }
 }

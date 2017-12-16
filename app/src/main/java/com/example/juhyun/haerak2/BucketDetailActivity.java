@@ -28,7 +28,7 @@ public class BucketDetailActivity extends AppCompatActivity {
 
     private DatabaseReference dataBase , dataBase2, dataBase3, dataBase4;
     private TextView nickName, title, date, content, currNum, limitNum;
-    private String key, user, category;
+    private String key, user, category, photoUrl;
     private Button join, addComment, makeGroup;
     private long memberNum;
     private EditText comments;
@@ -129,12 +129,19 @@ public class BucketDetailActivity extends AppCompatActivity {
                 content.setText(bucket.getContent());
                 limitNum.setText(bucket.getLimitNumber() + "");
                 category = bucket.getCategory();
+                photoUrl = bucket.getPhotoUrl();
 
                 if(bucket.getWriter().equals(user)){
                     makeGroup.setVisibility(View.VISIBLE);
                     makeGroup.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
                     join.setVisibility(View.INVISIBLE);
                     join.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0));
+
+                    if(bucket.getIsGroup().equals("true"))
+                    {
+                        makeGroup.setText("그룹확정");
+                        makeGroup.setClickable(false);
+                    }
                 }else{
                     makeGroup.setVisibility(View.INVISIBLE);
                     join.setVisibility(View.VISIBLE);
@@ -187,9 +194,14 @@ public class BucketDetailActivity extends AppCompatActivity {
                         group.setProgressRate(10);
                         group.setLimitNumber(Integer.parseInt(limitNum.getText().toString()));
                         group.setMembers(members);
+                        group.setPhotoUrl(photoUrl);
 
                         String group_key = dataBase4.child("BucketGroups").push().getKey();
                         dataBase4.child("BucketGroups").child(group_key).setValue(group);
+
+                        makeGroup.setText("그룹확정");
+                        makeGroup.setClickable(false);
+                        dataBase.child("isGroup").setValue("true");
                         
                         Toast.makeText(getApplicationContext(), "그룹 생성!", Toast.LENGTH_LONG).show();
                     }

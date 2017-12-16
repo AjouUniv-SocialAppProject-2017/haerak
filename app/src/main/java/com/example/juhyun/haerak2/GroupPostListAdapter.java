@@ -88,4 +88,12 @@ public class GroupPostListAdapter extends BaseAdapter {
         this.user = user;
         this.groupKey = groupKey;
     }
+
+    public void clearList()
+    {
+        keyList.clear();
+        postList.clear();
+        user = null;
+        groupKey = null;
+    }
 }

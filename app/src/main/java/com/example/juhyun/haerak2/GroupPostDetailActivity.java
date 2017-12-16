@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class GroupPostDetailActivity extends AppCompatActivity {
@@ -58,11 +59,20 @@ public class GroupPostDetailActivity extends AppCompatActivity {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             GroupPost groupPost = dataSnapshot.getValue(GroupPost.class);
+            ArrayList<String> members = groupPost.getLikeMembers();
 
             if(groupPost.getLikeMembers() == null){
                 num = 0;
             }else {
                 num = groupPost.getLikeMembers().size();
+
+                for(int i=0; i<members.size(); i++){
+                    if(members.get(i).equals(user)){
+                        likePost.setImageResource(R.drawable.ic_favorite_black_24dp);
+                        likePost.setTag("like");
+                    }
+                }
+
             }
             likeNum.setText(num+"");
         }
@@ -97,14 +107,14 @@ public class GroupPostDetailActivity extends AppCompatActivity {
         writer.setText(post.getWriter());
         content.setText(post.getContent());
 
-        if(post.getLikeMembers() != null){
-            for (int i=0; i<post.getLikeMembers().size(); i++){
-                if(post.getLikeMembers().get(i).equals(user)){
-                    likePost.setImageResource(R.drawable.ic_favorite_black_24dp);
-                    likePost.setTag("like");
-                }
-            }
-        }
+//        if(post.getLikeMembers() != null){
+//            for (int i=0; i<post.getLikeMembers().size(); i++){
+//                if(post.getLikeMembers().get(i).equals(user)){
+//                    likePost.setImageResource(R.drawable.ic_favorite_black_24dp);
+//                    likePost.setTag("like");
+//                }
+//            }
+//        }
 
 
         database2 = FirebaseDatabase.getInstance().getReference("GroupPosts").child(groupKey).child(key);
@@ -148,6 +158,12 @@ public class GroupPostDetailActivity extends AppCompatActivity {
                 commentText.setText("");
             }
         });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
     }
 }

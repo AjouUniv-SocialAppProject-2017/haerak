@@ -8,13 +8,15 @@ import java.util.ArrayList;
 
 public class BucketGroup {
 
-    String bucketId;
-    String leader;
-    String title;
-    String content;
-    String category;
-    int progressRate;
-    int limitNumber;
+    private String bucketId;
+    private String leader;
+    private String title;
+    private String content;
+    private String category;
+    private int progressRate;
+    private int limitNumber;
+    private String photoUrl;
+
     ArrayList<String> members;
 
     BucketGroup(){}
@@ -81,5 +83,13 @@ public class BucketGroup {
 
     public void setMembers(ArrayList<String> members) {
         this.members = members;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 }

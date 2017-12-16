@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -56,7 +57,6 @@ public class MylistLayout extends Fragment {
 
                 if(bucket.getWriter().equals(user)){
                     long count = memberCount.get(key).longValue();
-
                     adapter.addBucket(key, bucket, user, count);
                 }
 

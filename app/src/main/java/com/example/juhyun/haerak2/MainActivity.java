@@ -1,6 +1,7 @@
 package com.example.juhyun.haerak2;
 
 import android.app.FragmentManager;
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -102,12 +103,11 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView)findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         //displaySelectedScreen(R.id.content_main);
 
-        navigationView = (NavigationView)findViewById(R.id.nav_view);
+
         View navigation_header = navigationView.getHeaderView(0);
         userid = (TextView)navigation_header.findViewById(R.id.profile_userId);
         userEmail = (TextView)navigation_header.findViewById(R.id.profile_userEmail);
@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity
         }else{
             userid.setText(user.getNickName());
             userEmail.setText(user.getUserId());
+            navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
         }
 
         adapter = new BucketListAdapter();

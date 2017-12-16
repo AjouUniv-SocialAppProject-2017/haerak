@@ -1,13 +1,9 @@
 package com.example.juhyun.haerak2;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +20,7 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,6 +28,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -50,7 +48,7 @@ public class AddBucketActivity extends AppCompatActivity {
     private EditText title, limitNumber, content, place;
     private User user;
     private Uri uri;
-    private String bucket_category;
+    private String bucket_category, bucket_key;
     private double latitude, longitude;
     private boolean isLocationTrue = true;
     private static final int REQUEST_CATEGORY = 1;
@@ -78,7 +76,7 @@ public class AddBucketActivity extends AppCompatActivity {
         save = (Button) findViewById(R.id.addbucketButton);
         bucket_category = "do";
 
-        storageRef = FirebaseStorage.getInstance().getReference();
+        storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://haerak-683cd.appspot.com");
 
         //날짜 선택
         gocalButton.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +121,6 @@ public class AddBucketActivity extends AppCompatActivity {
                 }else if(!isLocationTrue){
                     Toast.makeText(getApplicationContext(), "주소를 정확히 입력해주세요", Toast.LENGTH_LONG).show();
                 }else{
-
                     addBucket();
                     uploadFile();
 
@@ -144,6 +141,7 @@ public class AddBucketActivity extends AppCompatActivity {
     }
 
     public void addBucket(){
+
         Bucket bucket = new Bucket();
 
         bucket.setTitle(title.getText().toString());
@@ -155,12 +153,12 @@ public class AddBucketActivity extends AppCompatActivity {
         bucket.setLocation(place.getText().toString());
         bucket.setLatitude(latitude);
         bucket.setLongitude(longitude);
+        bucket.setIsGroup("false");
 
-        String bucket_key = databaseReference.child("Buckets").push().getKey();
+        bucket_key = databaseReference.child("Buckets").push().getKey();
         databaseReference.child("Buckets").child(bucket_key).setValue(bucket);
 
         databaseReference.child("Bucket-members").child(bucket_key).child("0").setValue(user.getNickName());
-
     }
 
     public void uploadFile()
@@ -169,11 +167,17 @@ public class AddBucketActivity extends AppCompatActivity {
         filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                String photoUrl = taskSnapshot.getDownloadUrl().toString();
-                Toast.makeText(getApplicationContext(), photoUrl, Toast.LENGTH_LONG).show();
+
+            }
+        });
+        filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                databaseReference.child("Buckets").child(bucket_key).child("photoUrl").setValue(uri.toString());
             }
         });
     }
+
 
     //주소를 경도, 위도로 변환
     public void changePlaceLanLon(){

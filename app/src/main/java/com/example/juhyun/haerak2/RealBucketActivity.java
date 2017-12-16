@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -31,6 +32,37 @@ public class RealBucketActivity extends AppCompatActivity {
     private TextView title, content, progressRate;
     private ListView memberList, postList;
     private ImageView categoryImage, progressImage;
+    private boolean isStart = true;
+
+    private ValueEventListener getPostList = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            for(DataSnapshot data: dataSnapshot.getChildren()){
+                String postKey = data.getKey();
+                DataSnapshot dd = data.child("likeMembers");
+
+                GroupPost post = new GroupPost();
+                post.setTitle(data.child("title").getValue(String.class));
+                post.setContent(data.child("content").getValue(String.class));
+                post.setWriter(data.child("writer").getValue(String.class));
+
+                ArrayList<String> members = new ArrayList<>();
+                for(DataSnapshot name : dd.getChildren()){
+                    members.add(name.getValue(String.class));
+                }
+
+                post.setLikeMembers(members);
+
+                postAdapter.addPost(key, postKey, post, user);
+            }
+            postAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,35 +157,7 @@ public class RealBucketActivity extends AppCompatActivity {
         });
 
         database2 = FirebaseDatabase.getInstance().getReference("GroupPosts").child(key);
-        database2.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot data: dataSnapshot.getChildren()){
-                    String postKey = data.getKey();
-                    DataSnapshot dd = data.child("likeMembers");
-
-                    GroupPost post = new GroupPost();
-                    post.setTitle(data.child("title").getValue(String.class));
-                    post.setContent(data.child("content").getValue(String.class));
-                    post.setWriter(data.child("writer").getValue(String.class));
-
-                    ArrayList<String> members = new ArrayList<>();
-                    for(DataSnapshot name : dd.getChildren()){
-                        members.add(name.getValue(String.class));
-                    }
-
-                    post.setLikeMembers(members);
-
-                    postAdapter.addPost(key, postKey, post, user);
-                }
-                postAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        database2.addListenerForSingleValueEvent(getPostList);
 
         progressImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -242,4 +246,18 @@ public class RealBucketActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(isStart){
+            isStart = false;
+        }else{
+            postAdapter.clearList();
+            postAdapter.notifyDataSetChanged();
+
+            database2.addListenerForSingleValueEvent(getPostList);
+        }
+
+    }
 }

@@ -6,7 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 
 import java.util.ArrayList;
 
@@ -18,12 +24,13 @@ public class MyBucketListAdapter extends BaseAdapter {
 
     private ArrayList<Bucket> bucketList;
     private ArrayList<String> keyList;
+    private ArrayList<Long> countList;
     private String user;
-    private long currNum;
 
     public MyBucketListAdapter(){
         bucketList = new ArrayList<>();
         keyList = new ArrayList<>();
+        countList = new ArrayList<>();
     }
 
     @Override
@@ -55,28 +62,26 @@ public class MyBucketListAdapter extends BaseAdapter {
         TextView category = (TextView) view.findViewById(R.id.bucket_category);
         TextView current = (TextView) view.findViewById(R.id.bucket_currNum);
         TextView limit = (TextView) view.findViewById(R.id.bucket_limitNum);
+        final LinearLayout layout = (LinearLayout) view.findViewById(R.id.bucket_back);
 
         Bucket bucket = bucketList.get(i);
 
         title.setText(bucket.getTitle());
         category.setText(bucket.getCategory());
-        current.setText(currNum+"");
+        current.setText(countList.get(i)+"");
         limit.setText(bucket.getLimitNumber()+"");
         view.setTag(keyList.get(i));
 
-        if(bucket!=null){
-            if(bucket.getLimitNumber() == 1){
-                view.setBackgroundResource(R.drawable.back1);
-            }else if(bucket.getLimitNumber() == 2){
-                view.setBackgroundResource(R.drawable.back2);
-            }else if(bucket.getLimitNumber() == 3){
-                view.setBackgroundResource(R.drawable.back3);
-            }else if(bucket.getLimitNumber() == 4){
-                view.setBackgroundResource(R.drawable.back4);
-            }else {
-                view.setBackgroundResource(R.drawable.back5);
-            }
-        }
+        Glide.with(context)
+                .load(bucket.getPhotoUrl())
+                .override(300,300)
+                .centerCrop()
+                .into(new SimpleTarget<GlideDrawable>() {
+                    @Override
+                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        layout.setBackground(resource);
+                    }
+                });
 
         if(bucket!=null){
             if(bucket.getCategory().equals("do")){
@@ -112,6 +117,6 @@ public class MyBucketListAdapter extends BaseAdapter {
         keyList.add(key);
         bucketList.add(bucket);
         this.user = user;
-        this.currNum = currNum;
+        countList.add(currNum);
     }
 }

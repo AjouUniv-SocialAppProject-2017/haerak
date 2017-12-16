@@ -40,11 +40,12 @@ public class GrouplistLayout extends Fragment {
             for(DataSnapshot data: dataSnapshot.getChildren()){
                 String key = data.getKey();
                 long count = data.getChildrenCount();
+                ArrayList<String> members = (ArrayList<String>) data.getValue();
 
                 memberCount.put(key, count);
 
-                for(DataSnapshot dd: data.getChildren()){
-                    if(dd.getValue(String.class).equals(user)){
+                for(int i=1; i<members.size(); i++){
+                    if(members.get(i).equals(user)){
                         unfixedBuckets.add(key);
                     }
                 }
@@ -87,12 +88,17 @@ public class GrouplistLayout extends Fragment {
     private ValueEventListener getBuckets = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            Bucket bucket = dataSnapshot.getValue(Bucket.class);
-            String key = dataSnapshot.getKey();
-            long currNum = memberCount.get(key).longValue();
+            for(DataSnapshot data:dataSnapshot.getChildren()){
+                String key = data.getKey();
+                Bucket bucket = data.getValue(Bucket.class);
 
-            adapter2.addBucket(key, bucket, user, currNum);
-
+                for(int i=0; i<unfixedBuckets.size(); i++){
+                    if(unfixedBuckets.get(i).equals(key) && bucket.getIsGroup().equals("false")){
+                        long currNum = memberCount.get(key).longValue();
+                        adapter2.addBucket(key, bucket, user, currNum);
+                    }
+                }
+            }
             adapter2.notifyDataSetChanged();
         }
 
@@ -140,22 +146,21 @@ public class GrouplistLayout extends Fragment {
         unfixedBuckets = new ArrayList<>();
         memberCount = new HashMap<>();
 
+        user = getArguments().getString("user");
+
         database = FirebaseDatabase.getInstance().getReference("BucketGroups");
         database2 = FirebaseDatabase.getInstance().getReference("Bucket-members");
         database3 = FirebaseDatabase.getInstance().getReference("Buckets");
 
         database2.addListenerForSingleValueEvent(getMemberCount);
-
-        user = getArguments().getString("user");
-
         database.addListenerForSingleValueEvent(getBucketGroups);
+        database3.addListenerForSingleValueEvent(getBuckets);
 
-        if(unfixedBuckets != null){
-            Log.d("ddddddddddd", unfixedBuckets.size()+"");
-            for(int i=0; i<unfixedBuckets.size(); i++){
-                database3.child(unfixedBuckets.get(i)).addListenerForSingleValueEvent(getBuckets);
-            }
-        }
+//        if(unfixedBuckets != null){
+//            for(int i=0; i<unfixedBuckets.size(); i++){
+//                database3.child(unfixedBuckets.get(i)).addListenerForSingleValueEvent(getBuckets);
+//            }
+//        }
 
 
         return v;
