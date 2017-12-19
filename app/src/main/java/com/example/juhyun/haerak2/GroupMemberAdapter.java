@@ -53,7 +53,7 @@ public class GroupMemberAdapter extends BaseAdapter {
 
         String nickName = members.get(i);
 
-        if(i == 0){
+        if(i==0){
             image.setImageResource(R.drawable.ic_crown);
         }
         userText.setText(nickName);

@@ -47,7 +47,7 @@ public class AddBucketActivity extends AppCompatActivity {
     private StorageReference storageRef;
     private EditText title, limitNumber, content, place;
     private User user;
-    private Uri uri;
+    private Uri photoUri;
     private String bucket_category, bucket_key;
     private double latitude, longitude;
     private boolean isLocationTrue = true;
@@ -124,6 +124,13 @@ public class AddBucketActivity extends AppCompatActivity {
                     addBucket();
                     uploadFile();
 
+                    storageRef.child("Photos").child(photoUri.getLastPathSegment()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            databaseReference.child("Buckets").child(bucket_key).child("photoUrl").setValue(uri.toString());
+                        }
+                    });
+
                     Intent intent = new Intent(AddBucketActivity.this, MainActivity.class);
                     intent.putExtra("user", user);
                     startActivity(intent);
@@ -163,17 +170,11 @@ public class AddBucketActivity extends AppCompatActivity {
 
     public void uploadFile()
     {
-        StorageReference filePath = storageRef.child("Photos").child(uri.getLastPathSegment());
-        filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        StorageReference filePath = storageRef.child("Photos").child(photoUri.getLastPathSegment());
+        filePath.putFile(photoUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-            }
-        });
-        filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                databaseReference.child("Buckets").child(bucket_key).child("photoUrl").setValue(uri.toString());
             }
         });
     }
@@ -255,8 +256,8 @@ public class AddBucketActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "날짜를 다시 선택해주세요.", Toast.LENGTH_LONG).show();
             }
         }else if(requestCode == REQUEST_GALLERY && resultCode == RESULT_OK){
-            uri = data.getData();
-            imageName.setText(uri.getEncodedPath());
+            photoUri = data.getData();
+            imageName.setText(photoUri.getEncodedPath());
         }
 
     }
